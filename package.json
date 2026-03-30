@@ -1,0 +1,33 @@
+{
+  "name": "story-point-load-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "webpack && k6 run dist/sample-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saba-calin/story-point-load-testing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/saba-calin/story-point-load-testing/issues"
+  },
+  "homepage": "https://github.com/saba-calin/story-point-load-testing#readme",
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-typescript": "^7.28.5",
+    "@types/k6": "^1.7.0",
+    "babel-loader": "^10.1.1",
+    "glob": "^13.0.6",
+    "typescript": "^6.0.2",
+    "webpack": "^5.105.4",
+    "webpack-cli": "^7.0.2"
+  }
+}
