@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack",
-    "test": "webpack && k6 run dist/sample-test.js"
+    "test-create-room": "webpack && k6 run --out influxdb=http://localhost:8086/k6 dist/create-room-test.js"
   },
   "repository": {
     "type": "git",

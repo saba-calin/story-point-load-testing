@@ -1,15 +1,16 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { Options } from 'k6/options';
+import { generateHtmlReport } from './html-report';
 
 export const options: Options = {
   scenarios: {
     constant_load: {
       executor: 'constant-arrival-rate',
-      rate: 60,
+      rate: 1000,
       timeUnit: '1s',
-      duration: '30s',
-      preAllocatedVUs: 20,
+      duration: '10s',
+      preAllocatedVUs: 1000,
     },
   },
 };
@@ -17,7 +18,7 @@ export const options: Options = {
 export default function (): void {
   const payload = JSON.stringify({ name: 'test' });
   const jar = http.cookieJar();
-  jar.set('https://api.story-point.xyz', 'jwt', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhYmEiLCJlbWFpbCI6InNhYmFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoic2FiYSIsImxhc3ROYW1lIjoic2FiYSIsImlhdCI6MTc3NDgyOTMyNywiZXhwIjoxNzc0OTE1NzI3fQ.2e6dO2lrvIKbf3-YdqADEq-R3korpOpZRH5tj5yFA_w');
+  jar.set('https://api.story-point.xyz', 'sp-access', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhYmEiLCJlbWFpbCI6InNhYmFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoic2FiYSIsImxhc3ROYW1lIjoic2FiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc3MTQ3NDYwLCJleHAiOjE3NzcxNDgzNjB9.70Z2orw3ABAiGLSpCmFqAuO00F8FL27xYAp0-bZ5kHg');
 
   const params = {
     headers: {
@@ -44,4 +45,10 @@ export default function (): void {
     'has roomId': (r) => JSON.parse(r.body as string).roomId !== undefined,
     'status is OPEN': (r) => JSON.parse(r.body as string).status === 'OPEN',
   });
+}
+
+export function handleSummary(data: any): Record<string, string> {
+  return {
+    'reports/create-room-test.html': generateHtmlReport(data),
+  };
 }
