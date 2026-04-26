@@ -1,7 +1,6 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { Options } from 'k6/options';
-import { generateHtmlReport } from './html-report';
 
 export const options: Options = {
   scenarios: {
@@ -45,10 +44,4 @@ export default function (): void {
     'has roomId': (r) => JSON.parse(r.body as string).roomId !== undefined,
     'status is OPEN': (r) => JSON.parse(r.body as string).status === 'OPEN',
   });
-}
-
-export function handleSummary(data: any): Record<string, string> {
-  return {
-    'reports/create-room-test.html': generateHtmlReport(data),
-  };
 }

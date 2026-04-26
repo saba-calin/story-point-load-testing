@@ -144,9 +144,38 @@
       }
     },
     {
+      "title": "Votes",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+      "datasource": "InfluxDB",
+      "targets": [
+        {
+          "query": "SELECT sum(\"value\") AS \"sent\" FROM \"votes_sent\" WHERE $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "sent"
+        },
+        {
+          "query": "SELECT sum(\"value\") AS \"confirmed\" FROM \"votes_confirmed\" WHERE $timeFilter GROUP BY time(1s)",
+          "rawQuery": true,
+          "refId": "confirmed"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
       "title": "Data Transfer",
       "type": "timeseries",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 },
       "datasource": "InfluxDB",
       "targets": [
         {
