@@ -12,7 +12,7 @@ const votesConfirmedCounter = new Counter('votes_confirmed');
 const BASE_URL = 'https://api.story-point.xyz';
 const WS_URL = 'wss://ws.story-point.xyz';
 const VALID_VOTES = ['1', '2', '3', '5', '8', '13', '21', '?'];
-const TEST_DURATION_S = 60;
+const TEST_DURATION_S = 15;
 const ROOM_SIZE = 5;
 
 const tokens = new SharedArray('tokens', () => {
@@ -105,7 +105,7 @@ export default function (data: { rooms: Room[]; startTime: number }): void {
   const roomIndex = Math.floor(vuIndex / ROOM_SIZE);
   const { roomId, storyId } = rooms[roomIndex];
 
-  sleep(vuIndex / 150);
+  sleep(vuIndex / 300);
 
   const jar = http.cookieJar();
   jar.set('https://ws.story-point.xyz', 'sp-access', token);
@@ -125,7 +125,7 @@ export default function (data: { rooms: Room[]; startTime: number }): void {
     };
 
     const scheduleNextVote = () => {
-      const delay = 1 + Math.random() * 999;
+      const delay = 100 + Math.random() * 900;
       socket.setTimeout(() => {
         if (!joined) return;
         const elapsed = (Date.now() - startTime) / 1000;
